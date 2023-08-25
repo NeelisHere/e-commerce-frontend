@@ -1,11 +1,10 @@
 // import { Counter } from './features/counter/Counter';
+import ProductListTemplate from "./features/product-list/ProductListTemplate";
 
 function App() {
 	return (
 		<div>
-			<h1 className="text-3xl font-bold underline">
-				Hello world!
-			</h1>
+			<ProductListTemplate />
 		</div>
 	);
 }
