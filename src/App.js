@@ -1,10 +1,13 @@
-// import { Counter } from './features/counter/Counter';
-import ProductListTemplate from "./features/product-list/ProductListTemplate";
+import Home from "./pages/Home";
+import LoginPage from "./pages/LoginPage";
+import SingupPage from "./pages/SingupPage";
 
 function App() {
 	return (
 		<div>
-			<ProductListTemplate />
+			{/* <Home /> */}
+			{/* <LoginPage /> */}
+			<SingupPage />
 		</div>
 	);
 }
