@@ -5,6 +5,7 @@ import SingupPage from "./pages/SingupPage";
 import ErrorPage from "./pages/ErrorPage";
 import CartPage from "./pages/CartPage";
 import Checkout from './pages/Checkout'
+import ProductDetailsPage from "./pages/ProductDetailsPage";
 
 const router = createBrowserRouter([
 	{ path: '/', element: <Home />, errorElement: <ErrorPage/>},
@@ -12,6 +13,7 @@ const router = createBrowserRouter([
 	{ path: '/sign-up', element: <SingupPage />},
 	{ path: '/cart', element: <CartPage />},
 	{ path: '/checkout', element: <Checkout />},
+	{ path: '/product-details', element: <ProductDetailsPage />},
 ])
 
 function App() {
