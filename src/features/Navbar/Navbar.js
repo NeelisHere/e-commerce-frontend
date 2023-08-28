@@ -1,4 +1,4 @@
-import { Fragment } from 'react'
+import { Fragment, useEffect, useRef, useState } from 'react'
 import { Disclosure, Menu, Transition } from '@headlessui/react'
 import { Bars3Icon, ShoppingCartIcon, XMarkIcon } from '@heroicons/react/24/outline'
 import { Link } from 'react-router-dom'
@@ -24,10 +24,15 @@ function classNames(...classes) {
 }
 
 export default function Navbar({ children }) {
+    const ref = useRef()
+    const [navWidth, setNavWidth] = useState(0)
+    useEffect(()=>{
+        setNavWidth(ref.current.clientHeight)
+    }, [])
     return (
         <>
             <div className="min-h-full">
-                <Disclosure as="nav" className="bg-gray-800">
+                <Disclosure ref={ref} as="nav" className="bg-gray-800 w-full">
                     {({ open }) => (
                         <>
                             <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -189,12 +194,12 @@ export default function Navbar({ children }) {
                     )}
                 </Disclosure>
 
-                <header className="bg-white shadow">
+                <header className={"bg-white shadow"}>
                     <div className="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
                         <h1 className="text-3xl font-bold tracking-tight text-gray-900">Dashboard</h1>
                     </div>
                 </header>
-                <main>
+                <main className=''>
                     <div className="mx-auto max-w-7xl py-6 sm:px-6 lg:px-8">
                         {children}
                     </div>
