@@ -553,4 +553,26 @@ const dummyProducts = [
         }
 ]
 
-export default dummyProducts
+// export default dummyProducts
+let categories = [...new Set(dummyProducts.map((p) => p['category']))]
+categories = categories.map((category) => {
+    let label = category.split('-').map((c) => {
+        return c.slice(0,1).toUpperCase() + c.slice(1,c.length)
+    }).join(' ')
+
+    return {
+        value: category,
+        label,
+        checked: false
+    }
+})
+
+let brands = [...new Set(dummyProducts.map((p) => p['brand']))]
+brands = brands.map((brand) => {
+    return {
+        value: brand,
+        label: brand,
+        checked: false
+    }
+})
+console.log(brands)

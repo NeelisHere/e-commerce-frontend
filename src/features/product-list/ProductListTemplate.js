@@ -4,6 +4,7 @@ import { XMarkIcon } from '@heroicons/react/24/outline'
 import { ChevronDownIcon, FunnelIcon, MinusIcon, PlusIcon, Squares2X2Icon } from '@heroicons/react/20/solid'
 import ProductList from './ProductList'
 import Pagination from './Pagination'
+import { useSelector } from 'react-redux'
 
 const sortOptions = [
     { name: 'Most Popular', href: '#', current: true },
@@ -14,39 +15,14 @@ const sortOptions = [
 ]
 const filters = [
     {
-        id: 'color',
-        name: 'Color',
-        options: [
-            { value: 'white', label: 'White', checked: false },
-            { value: 'beige', label: 'Beige', checked: false },
-            { value: 'blue', label: 'Blue', checked: true },
-            { value: 'brown', label: 'Brown', checked: false },
-            { value: 'green', label: 'Green', checked: false },
-            { value: 'purple', label: 'Purple', checked: false },
-        ],
+        id: 'brand',
+        name: 'Brands',
+        options: []
     },
     {
         id: 'category',
         name: 'Category',
-        options: [
-            { value: 'new-arrivals', label: 'New Arrivals', checked: false },
-            { value: 'sale', label: 'Sale', checked: false },
-            { value: 'travel', label: 'Travel', checked: true },
-            { value: 'organization', label: 'Organization', checked: false },
-            { value: 'accessories', label: 'Accessories', checked: false },
-        ],
-    },
-    {
-        id: 'size',
-        name: 'Size',
-        options: [
-            { value: '2l', label: '2L', checked: false },
-            { value: '6l', label: '6L', checked: false },
-            { value: '12l', label: '12L', checked: false },
-            { value: '18l', label: '18L', checked: false },
-            { value: '20l', label: '20L', checked: false },
-            { value: '40l', label: '40L', checked: true },
-        ],
+        options: []
     },
 ]
 function classNames(...classes) {
@@ -54,6 +30,9 @@ function classNames(...classes) {
 }
 
 const ProductListTemplate = () => {
+    const {brands, categories} = useSelector((state)=>state.product)
+    filters[0].options = brands
+    filters[1].options = categories
     const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false)
 
     return (
