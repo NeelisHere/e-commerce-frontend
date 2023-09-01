@@ -2,6 +2,7 @@ import { Link } from "react-router-dom"
 import { fetchAllProductsAsync } from '../product-list/productListSlice.js'
 import { useDispatch, useSelector } from "react-redux"
 import { useEffect } from "react"
+// import { fetchAllProductsByFiltersAsync } from './productListSlice.js'
 
 const ProductList = () => {
     const dispatch = useDispatch()
@@ -56,8 +57,6 @@ const ProductList = () => {
                                             </p>
                                         </div>
                                     </div>
-
-
                                 </div>
                             </Link>
                         </div>

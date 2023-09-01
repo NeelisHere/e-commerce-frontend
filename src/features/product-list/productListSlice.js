@@ -1,10 +1,11 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit"
-import { fetchProducts } from "./productListAPI"
+import { fetchProducts, fetchProductsByFilters } from "./productListAPI"
 
 const initialState = {
     brands: [],
     categories: [],
     products: [],
+    // filters: [],
     isLoading: false,
     error: null
 }
@@ -14,6 +15,17 @@ export const fetchAllProductsAsync = createAsyncThunk(
     async () => {
         const data = await fetchProducts()
         return data
+    }
+)
+
+export const fetchAllProductsByFiltersAsync = createAsyncThunk(
+    'product/fetchAllProductsByFiltersAsync',
+    async (productfilters) => {
+        // console.log('inside fetchAllProductsByFiltersAsync: \n', productfilters)
+        const data = await fetchProductsByFilters(productfilters)
+        // console.log(data)
+        return data
+        // return []
     }
 )
 
@@ -49,7 +61,14 @@ export const productSlice = createSlice({
     name: 'product',
     initialState,
     reducers: {
-
+        updateBrands: (state, action) => {
+            const { index, value } = action.payload
+            state.brands[index].checked = value
+        }, 
+        updateCategories: (state, action) => {
+            const { index, value } = action.payload
+            state.categories[index].checked = value
+        },
     },
     extraReducers: (builder) => {
         builder
@@ -63,6 +82,18 @@ export const productSlice = createSlice({
             state.categories = getCategoryList(action.payload)
         })
         .addCase(fetchAllProductsAsync.rejected, (state, action) => {
+            state.isLoading = false
+            state.error = action.error.message
+        })
+        //----------------------------------------------------------------
+        .addCase(fetchAllProductsByFiltersAsync.pending, (state) => {
+            state.isLoading = true 
+        })
+        .addCase(fetchAllProductsByFiltersAsync.fulfilled, (state, action) => {
+            state.isLoading = false
+            state.products = action.payload
+        })
+        .addCase(fetchAllProductsByFiltersAsync.rejected, (state, action) => {
             state.isLoading = false
             state.error = action.error.message
         })
