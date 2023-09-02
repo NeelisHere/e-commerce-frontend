@@ -23,13 +23,14 @@ export const fetchProductsByFilters = (productfilters) => {
                 k = ''
                 break
         }
+        // console.log(productfilters[key])
         if(productfilters[key].length>0) {
-            query += `${k}=${productfilters[key].pop()}&`
+            const last = productfilters[key].length-1
+            query += `${k}=${productfilters[key][last]}&`
         }
     })
     query = query.slice(0, query.length-1)
     return new Promise(async (resolve) => {
-        // console.log('>>', query)
         const { data } = await axios(`http://localhost:8000/products?${query}`)
         resolve(data)
     })

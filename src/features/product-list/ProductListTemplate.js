@@ -5,15 +5,13 @@ import { ChevronDownIcon, FunnelIcon, MinusIcon, PlusIcon, Squares2X2Icon } from
 import ProductList from './ProductList'
 import Pagination from './Pagination'
 import { useDispatch, useSelector } from 'react-redux'
-import { fetchAllProductsByFiltersAsync } from './productListSlice.js'
+import { fetchAllProductsByFiltersAsync, sortProducts } from './productListSlice.js'
 import FilterSection from './FilterSection.js'
 
 const sortOptions = [
-    { name: 'Most Popular', href: '#', current: true },
-    { name: 'Best Rating', href: '#', current: false },
-    { name: 'Newest', href: '#', current: false },
-    { name: 'Price: Low to High', href: '#', current: false },
-    { name: 'Price: High to Low', href: '#', current: false },
+    { name: 'Best Rating', id: 'sort-by-rating', current: false },
+    { name: 'Price: Low to High', id: 'sort-by-price-asc', current: false },
+    { name: 'Price: High to Low', id: 'sort-by-price-desc', current: false },
 ]
 
 function classNames(...classes) {
@@ -40,9 +38,9 @@ const ProductListTemplate = () => {
     const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false)
 
     useEffect(() => {
-        // console.log(productfilters)
+        // console.log('@', productfilters)
         dispatch(fetchAllProductsByFiltersAsync(productfilters))
-    }, [productfilters])
+    }, [dispatch, productfilters])
 
     return (
         <div className="bg-gray-100">
@@ -168,16 +166,18 @@ const ProductListTemplate = () => {
                                             {sortOptions.map((option) => (
                                                 <Menu.Item key={option.name}>
                                                     {({ active }) => (
-                                                        <a
-                                                            href={option.href}
+                                                        <div
                                                             className={classNames(
                                                                 option.current ? 'font-medium text-gray-900' : 'text-gray-500',
                                                                 active ? 'bg-gray-100' : '',
                                                                 'block px-4 py-2 text-sm'
                                                             )}
+                                                            onClick={()=>{
+                                                                dispatch(sortProducts(option.id))
+                                                            }}
                                                         >
                                                             {option.name}
-                                                        </a>
+                                                        </div>
                                                     )}
                                                 </Menu.Item>
                                             ))}

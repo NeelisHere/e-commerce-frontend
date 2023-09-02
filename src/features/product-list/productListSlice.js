@@ -57,6 +57,8 @@ const getBrandList = (products) => {
     return brands
 }
 
+const getDiscountedPrice = (p) => p.price - p.price*(p.discountPercentage/100)
+
 export const productSlice = createSlice({
     name: 'product',
     initialState,
@@ -68,6 +70,22 @@ export const productSlice = createSlice({
         updateCategories: (state, action) => {
             const { index, value } = action.payload
             state.categories[index].checked = value
+        },
+        sortProducts: (state, action) => {
+            const id = action.payload
+            switch (id) {
+                case 'sort-by-price-asc': 
+                    state.products.sort((a, b) => (getDiscountedPrice(a) - getDiscountedPrice(b)))
+                    break;
+                case 'sort-by-price-desc':
+                    state.products.sort((a, b) => (getDiscountedPrice(b) - getDiscountedPrice(a)))
+                    break;
+                case 'sort-by-rating':
+                    state.products.sort((a, b) => b.rating - a.rating)
+                    break;
+                default:
+                    break;
+            }
         },
     },
     extraReducers: (builder) => {
@@ -99,3 +117,5 @@ export const productSlice = createSlice({
         })
     }
 })
+
+export const { sortProducts } = productSlice.actions
